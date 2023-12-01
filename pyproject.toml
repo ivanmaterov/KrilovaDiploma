@@ -1,0 +1,73 @@
+[tool.poetry]
+name = "apps"
+version = "0.1.0"
+description = ""
+authors = []
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+# Postgres database adapter
+# https://github.com/psycopg/psycopg2
+psycopg2 = "^2.9.5"
+# Web framework
+# https://github.com/django/django
+django = "^4.1.5"
+# Reading env files and getting enviroment variables
+# https://github.com/joke2k/django-environ
+django-environ = "^0.9.0"
+# Bootstrap forms for django templates
+# https://github.com/django-crispy-forms/django-crispy-forms
+django-crispy-forms = "^1.14.0"
+# https://github.com/django-crispy-forms/crispy-bootstrap5
+crispy-bootstrap5 = "^0.7"
+# Django REST Framework
+# https://github.com/encode/django-rest-framework
+djangorestframework = "^3.14.0"
+# Manage CORS headers for django settings
+# https://github.com/adamchainz/django-cors-headers
+django-cors-headers = "^3.13.0"
+# DRF-spectacular for api documentation
+# https://github.com/tfranzel/drf-spectacular
+drf-spectacular = "^0.25.1"
+# Provide script for wait database
+# https://github.com/painless-software/django-probes
+django-probes = "^1.7.0"
+# Add simple filters for drf
+# https://github.com/carltongibson/django-filter
+django-filter = "^22.1"
+# Library for import and export in xslx format
+django-import-export = "^3.2.0"
+
+[tool.poetry.group.develop.dependencies]
+# WSGI application library
+# watchdogs for checking changes in files
+# https://github.com/pallets/werkzeug
+werkzeug = {extras = ["watchdog"], version = "^2.2.2"}
+# Debugger
+# https://github.com/gotcha/ipdb
+ipdb = "^0.13.11"
+# Testing framework
+# https://github.com/pytest-dev/pytest
+pytest = "^7.2.0"
+# Pretty pytest output and etc
+# https://github.com/Frozenball/pytest-sugar
+pytest-sugar = "^0.9.6"
+
+# -----------------------------------Django-----------------------------------
+# Provide fake data generation
+# https://github.com/FactoryBoy/factory_boy
+factory-boy = "^3.2.1"
+# Advanced debugging for api and templates
+# https://github.com/jazzband/django-debug-toolbar
+django-debug-toolbar = "^3.8.1"
+# Management support for django
+# https://github.com/django-extensions/django-extensions
+django-extensions = "^3.2.1"
+# Support pytest for django
+# https://github.com/pytest-dev/pytest-django
+pytest-django = "^4.5.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,39 @@
+{% comment %} Темплейт для модального окна удаления{% endcomment %}
+
+<div
+    id="confirmDeleteModal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="confirmDeleteModal"
+    aria-hidden="true"
+>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Подтвердите удаление</h5>
+            </div>
+
+            <div class="modal-body">   
+                <h5>Имя ПК</h5>
+                <p class="computer_name"></p>
+                <h5>Системное имя устройства</h5>
+                <p class="system_device_name"></p>
+                <h5>Статус</h5>
+                <p class="status"></p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Закрыть</button>
+                <form method="post">
+                {% csrf_token %}
+                    <input
+                        type="submit"
+                        value="Удалить"
+                        class="btn btn-danger button"
+                    >
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

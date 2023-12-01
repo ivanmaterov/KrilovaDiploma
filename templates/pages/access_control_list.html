@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block javascript %}
+{{ block.super }}
+<script defer src="{% static 'js/modal/confirmDelete.js' %}"></script>
+<script defer src="{% static 'js/filterByStatus.js' %}"></script>
+{% endblock javascript %}
+
+{% block content %}
+{% include "modal/confirm_delete.html" %}
+
+<div class="mb-3">
+    <a class="btn btn-outline-success" href="{% url 'access-control-create' %}" role="button">Создать Заявку</a>
+    <a class="btn btn-outline-success" href="{% url 'import-access-control' %}" role="button">Импортировать</a>
+</div>
+<label class="px-2">
+    {% comment %} В процессе: <input type="checkbox" value="" id="checkboxInProgressFilter"> {% endcomment %}
+    <select class="form-select" id="selectStatus" aria-label="Default select example">
+        <option selected>Статус</option>
+        {% for status in statuses %}
+        <option value="{{ status }}">{{ status }}</option>
+        {% endfor %}
+    </select>
+</label>
+<table id="accessControlTable" class="table table-bordered" style="width:100%">
+    <thead>
+        <tr>
+            <th>{{ column_names_mapping.computer_name }}</th>
+            <th>{{ column_names_mapping.username }}</th>
+            <th>{{ column_names_mapping.device_display_name }}</th>
+            <th>{{ column_names_mapping.device_system_name }}</th>
+            <th>{{ column_names_mapping.device_serial_id }}</th>
+            <th>{{ column_names_mapping.soi_id }}</th>
+            <th>{{ column_names_mapping.sadd_id }}</th>
+            <th>{{ column_names_mapping.status }}</th>
+            <th>{{ column_names_mapping.comment }}</th>
+            <th>&#128736;</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in access_control_items %}
+        <tr
+            class="
+                {% if row.status == "prohibited" %}
+                table-danger
+                {% elif row.status == "in_progress" %}
+                table-warning
+                {% endif %}
+            "
+        >
+            <td>{{ row.computer_name }}</td>
+            <td>{{ row.username }}</td>
+            <td>{{ row.device_display_name }}</td>
+            <td>{{ row.device_system_name }}</td>
+            <td>{{ row.device_serial_id }}</td>
+            <td>{{ row.soi_id }}</td>
+            <td>{{ row.sadd_id }}</td>
+            <td>{{ row.status }}</td>
+            <td>{{ row.comment }}</td>
+            <td>
+                <a
+                    href="#confirmDeleteModal"
+                    class="text-decoration-none"
+                    data-bs-toggle="modal"
+                    data-bs-id="{{row.id}}"
+                    data-bs-computer-name="{{row.computer_name}}"
+                    data-bs-device-display-name="{{row.device_display_name}}"
+                    data-bs-status="{{row.status}}"
+                >&#10060;</a>
+                <a
+                    href="{% url "access-control-update" pk=row.id %}"
+                    class="text-decoration-none"
+                >&#128269;</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
+
+{% block inline_javascript %}
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        const table = new DataTable('#accessControlTable', {
+            pagingType: 'full_numbers',
+        });
+
+        initFilterByStatus(table);
+        initConfirmDeleteModalWindow('confirmDeleteModal');
+    });
+</script>
+{% endblock %}
